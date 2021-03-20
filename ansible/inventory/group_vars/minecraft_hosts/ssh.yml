@@ -1,0 +1,21 @@
+---
+# Basic
+sshd_port: '22'
+sshd_protocol: '2'
+sshd_address_family: 'inet'
+
+# Authentification:
+sshd_permit_root_login: 'without-password'
+sshd_permit_password_authentification: 'yes'
+sshd_permit_empty_passwords: 'no'
+sshd_challenge_response_auth: 'no'
+sshd_gss_api_authentication: 'no'
+sshd_strict_mode: 'yes'
+sshd_allowed_users: []
+sshd_allowed_groups: 'sshlogin, root'
+sshd_disabled_ciphers: 'arcfour*'
+
+# Misc
+sshd_allow_x11_forwarding: 'no'
+sshd_usedns: 'no'
+sshd_print_motd: 'no'

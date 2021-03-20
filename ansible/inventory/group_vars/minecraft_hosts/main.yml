@@ -1,0 +1,45 @@
+---
+# Common Management Selections:
+common_crontabs_configure: 'false'
+common_disks_configure: 'false'
+common_dns_configure: 'false'
+common_groups_configure: 'true'
+common_mail_configure: 'true'
+common_proxy_profile_configure: 'false'
+common_scripting_configure: 'false'
+common_software_configure: 'true' 
+common_timezone_configure: 'true'
+common_users_configure: 'false'
+common_sudoers_configure: 'true'
+
+# Timezone
+common_timezone: "Europe/Berlin"
+
+# Mail Aliases:
+common_etc_aliases:
+  - name: "Redirect root mails."
+    line: 'root:		mail@marcreichel.de'
+    regexp: '^root\:.*'
+    insertbefore: EOF
+    setype: etc_aliases_t
+    state: present
+    backup: yes
+
+# Scripting:
+scripting_path: /opt/control/scripts
+config_path: /opt/control/config
+scripting_scripts: []
+
+# Bash
+shopt_options:
+  - shopt -s cdspell
+  - shopt -s nocaseglob
+
+common_zsh_configure: 'true'
+common_zsh_users: [root]
+common_zsh_theme: clean
+common_zsh_path: /opt/oh-my-zsh
+common_zsh_plugins:
+ - git
+ - rsync
+ - wd
