@@ -1,0 +1,21 @@
+---
+- src: thorian93.ansible_role_common
+  version: master
+- src: thorian93.ansible_role_fail2ban
+  version: master
+- src: thorian93.ansible_role_firewall
+  version: master
+- src: thorian93.ansible_role_journald
+  version: master
+- src: thorian93.ansible_role_logrotate
+  version: master
+- src: thorian93.ansible_role_ntp
+  version: master
+- src: thorian93.ansible_role_ssh
+  version: master
+- src: thorian93.ansible_role_sudo
+  version: master
+- src: thorian93.ansible_role_supervisor
+  version: master
+- src: thorian93.ansible_role_upgrade
+  version: master

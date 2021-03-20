@@ -1,0 +1,25 @@
+---
+- name: Install Prerequisites.
+  apt:
+    name: ddclient,libio-socket-ssl-perl
+    state: present
+    update_cache: yes
+
+- name: Configure DynDNS Client.
+  template:
+    src: ddclient.conf.j2
+    dest: /etc/ddclient.conf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: Start DynDNS Daemon.
+  service:
+    name: ddclient
+    state: restarted
+    enabled: yes
+
+- name: Verify DynDNS.
+  command: ddclient -daemon=0 -debug -verbose -noquiet
+  register: ddclient_status
+  changed_when: (ddclient_status.rc == 0) or (ddclient_status.rc == 1)

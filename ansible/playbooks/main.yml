@@ -1,0 +1,60 @@
+---
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - full
+    - minimal
+  roles:
+    - thorian93.ansible_role_common
+    - thorian93.ansible_role_ntp
+    - thorian93.ansible_role_journald
+    - thorian93.ansible_role_logrotate
+
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - full
+    - upgrade
+  roles:
+    - thorian93.ansible_role_upgrade
+
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - full
+    - security
+    - network
+  roles:
+    - thorian93.ansible_role_firewall
+    - thorian93.ansible_role_fail2ban
+    - thorian93.ansible_role_sudo
+    - thorian93.ansible_role_ssh
+
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - full
+    - minecraft
+    - start
+  tasks:
+    - name: "Include DynDNS Playbook."
+      ansible.builtin.include_tasks: dyndns.yml
+
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - full
+    - minecraft
+    - start
+  tasks:
+    - name: "Include Start Playbook."
+      ansible.builtin.include_tasks: start.yml
+
+- hosts: minecraft_hosts
+  become: yes
+  tags:
+    - destroy
+    - never
+  tasks:
+    - name: "Include Destroy Playbook."
+      ansible.builtin.include_tasks: destroy.yml

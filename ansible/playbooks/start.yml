@@ -1,0 +1,56 @@
+---
+- name: "Install Prerequisites."
+  ansible.builtin.package:
+    name: openjdk-11-jdk,screen
+    state: present
+
+- name: "Check Minecraft Save Status."
+  become: 'false'
+  ansible.builtin.stat:
+    path: files/minecraft.zip
+  register: minecraft_save_status
+  delegate_to: localhost
+
+- name: "Upload Save."
+  ansible.builtin.copy:
+    src: minecraft.zip
+    dest: /tmp/minecraft.zip
+  when: minecraft_save_status.stat.exists | bool
+
+- name: "Unpack Save."
+  ansible.builtin.unarchive:
+    src: /tmp/minecraft.zip
+    dest: /opt/
+    keep_newer: 'yes'
+    remote_src: 'yes'
+  when: minecraft_save_status.stat.exists | bool
+
+- name: "Ensure Server Directory exists."
+  ansible.builtin.file:
+    path: "{{ minecraft_root }}"
+    state: directory
+
+- name: "Get Minecraft Server."
+  ansible.builtin.get_url:
+    url: "{{ minecraft_server_jar_download }}"
+    dest: "{{ minecraft_root }}/server.jar"
+    owner: root
+    group: root
+    mode: 0750
+
+- name: "Copy other files."
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ minecraft_root }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0700
+  with_items:
+    - run_server.sh
+    - server.properties
+    - eula.txt
+    - whitelist.json
+    - ops.json
+
+- name: "Run Server in Screen."
+  ansible.builtin.shell: "screen -S minecraft -d -m bash -c {{ minecraft_root }}/run_server.sh && sleep 1"

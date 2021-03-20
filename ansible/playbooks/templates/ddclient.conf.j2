@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+#
+# ddclient configuration
+#
+daemon=60                   # Check every 60 seconds.
+syslog=yes                  # Log update msgs to syslog.
+pid=/var/run/ddclient.pid   # Record PID in file.                                      
+protocol=dyndns2
+use=web
+ssl=yes
+server=dyndns.strato.com/nic/update
+login={{ dyndns_user }}
+password={{ dyndns_pw }}
+{{ dyndns_domain }}

@@ -1,0 +1,15 @@
+---
+- hosts:
+    - stage_prod
+    - stage_test
+  become: yes
+  tags:
+    - full
+    - minimal
+  roles:
+    - thorian93.ansible_role_firewall
+    - thorian93.ansible_role_fail2ban
+    - thorian93.ansible_role_journald
+    - thorian93.ansible_role_logrotate
+    - thorian93.ansible_role_ntp
+    - thorian93.ansible_role_upgrade
