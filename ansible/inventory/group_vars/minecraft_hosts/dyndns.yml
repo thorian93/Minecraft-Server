@@ -1,0 +1,4 @@
+---
+dyndns_user: "{{ personal_dyndns_user }}"
+dyndns_domain: "{{ personal_dyndns_domain }}"
+dyndns_pw: "{{ personal_dyndns_pw }}"

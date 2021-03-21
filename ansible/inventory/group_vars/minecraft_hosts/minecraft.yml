@@ -1,3 +1,7 @@
 ---
+minecraft_use_git: "{{ personal_minecraft_use_git }}"
+minecraft_use_archive: "{{ personal_minecraft_use_archive }}"
+minecraft_git_repo: "{{ personal_minecraft_git_repo }}"
+
 minecraft_root: /opt/minecraft
 minecraft_server_jar_download: "https://launcher.mojang.com/v1/objects/1b557e7b033b583cd9f66746b7a9ab1ec1673ced/server.jar"

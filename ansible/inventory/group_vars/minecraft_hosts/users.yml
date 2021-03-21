@@ -1,0 +1,14 @@
+---
+common_global_users_present: []
+  # - name: user
+  #   password: user
+  #   update_password: always
+  #   keys: []
+  #   shell: /bin/bash
+  #   user_groups:
+  #     - sshlogin
+  #     - "{{ common_admin_group }}"
+  #   append: yes
+  #   system: no
+  #   state: present
+  #   remove: no
