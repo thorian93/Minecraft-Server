@@ -1,10 +1,11 @@
 # Minecraft Server
 
-This repository contains my very own Minecraft server including deployment magic.
+This repository contains my very own Minecraft Server Deployment Configuration.
 
 ## Ressources
 
 - https://minecraft.gamepedia.com/Tutorials/Setting_up_a_server
+- https://minecraft.gamepedia.com/Tutorials
 
 ## How To
 
