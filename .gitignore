@@ -8,5 +8,6 @@ terraform.tfvars
 *.plan
 ansible/inventory/**/personal.yml
 ansible/playbooks/files/minecraft.zip
+ansible/playbooks/files/minecraft-git-key*
 ansible/roles/*
 !ansible/roles/requirements.yml

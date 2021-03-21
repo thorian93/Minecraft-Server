@@ -27,11 +27,17 @@ The startup is pretty simple:
 
     `cp inventory/group_vars/minecraft_hosts/personal.yml.template inventory/group_vars/minecraft_hosts/personal.yml`
 
-5. Start the server:
+6. Export your cloud provider token if necessary.
+
+7. Create a keypair if you are using git.
+
+    `cd playbooks/files && ssh-keygen -t rsa -b 4096 -f minecraft-git-key && cd -`
+
+8. Start the server:
 
     `ansible-playbook -i inventory/hcloud.py playbooks/main.yml --tags full`
 
-6. Log in using your Minecraft client.
+9. Log in using your Minecraft client.
 
 ## Disclaimer
 
