@@ -1,0 +1,4 @@
+host github.com
+ HostName github.com
+ IdentityFile /root/.ssh/minecraft-git-key
+ User git
