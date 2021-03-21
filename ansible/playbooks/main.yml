@@ -34,7 +34,7 @@
   become: yes
   tags:
     - full
-    - minecraft
+    - dyndns
     - start
   tasks:
     - name: "Include DynDNS Playbook."

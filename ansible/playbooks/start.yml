@@ -10,12 +10,13 @@
     path: files/minecraft.zip
   register: minecraft_save_status
   delegate_to: localhost
+  when: minecraft_use_archive | bool
 
 - name: "Upload Save."
   ansible.builtin.copy:
     src: minecraft.zip
     dest: /tmp/minecraft.zip
-  when: minecraft_save_status.stat.exists | bool
+  when: (minecraft_use_archive | bool) and (minecraft_save_status.stat.exists | bool)
 
 - name: "Unpack Save."
   ansible.builtin.unarchive:
@@ -23,7 +24,27 @@
     dest: /opt/
     keep_newer: 'yes'
     remote_src: 'yes'
-  when: minecraft_save_status.stat.exists | bool
+  when: (minecraft_use_archive | bool) and (minecraft_save_status.stat.exists | bool)
+
+- name: Configure SSH.
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/root/.ssh/{{ item }}"
+    owner: root
+    group: root
+    mode: 0600
+  with_items:
+    - minecraft-git-key
+    - config
+  when: (minecraft_use_git | bool)
+
+- name: Checkout Server from github.
+  ansible.builtin.git:
+    repo: "{{ minecraft_git_repo }}"
+    dest: "{{ minecraft_root }}"
+    key_file: /root/.ssh/minecraft-git-key
+    accept_hostkey: yes
+  when: (minecraft_use_git | bool)
 
 - name: "Ensure Server Directory exists."
   ansible.builtin.file:
@@ -38,7 +59,19 @@
     group: root
     mode: 0750
 
-- name: "Copy other files."
+- name: "Copy Minecraft Configuration."
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "{{ minecraft_root }}/{{ item }}"
+    owner: root
+    group: root
+    mode: 0700
+  with_items:
+    # - server.properties
+    - whitelist.json
+    - ops.json
+
+- name: "Copy Minecraft Files."
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ minecraft_root }}/{{ item }}"
@@ -46,11 +79,15 @@
     group: root
     mode: 0700
   with_items:
+    - git_config.sh
+    - git_commit.sh
     - run_server.sh
     - server.properties
     - eula.txt
-    - whitelist.json
-    - ops.json
+
+- name: "Configure Git."
+  ansible.builtin.shell: "bash {{ minecraft_root }}/git_config.sh"
+  when: (minecraft_use_git | bool)
 
 - name: "Run Server in Screen."
   ansible.builtin.shell: "screen -S minecraft -d -m bash -c {{ minecraft_root }}/run_server.sh && sleep 1"

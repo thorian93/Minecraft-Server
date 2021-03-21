@@ -1,6 +1,5 @@
 - name: "Stop Server in Screen."
-  ansible.builtin.shell: "screen -S minecraft -X quit && sleep 1"
-  ignore_errors: 'true'
+  ansible.builtin.shell: screen -S minecraft -X stuff "/stop$(printf '\r')" && sleep 5
 
 - name: "Create Archive of Server Contents."
   ansible.builtin.archive:
@@ -8,9 +7,15 @@
     dest: /tmp/minecraft.zip
     remove: 'yes'
     format: zip
+  when: minecraft_use_archive | bool
 
 - name: "Download Server Contents."
   ansible.builtin.fetch:
     src: "/tmp/minecraft.zip"
     dest: files/
     flat: 'yes'
+  when: minecraft_use_archive | bool
+
+- name: "Commit Changes to Git."
+  ansible.builtin.shell: "bash {{ minecraft_root }}/git_commit.sh"
+  when: minecraft_use_git | bool

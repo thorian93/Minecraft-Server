@@ -1,0 +1,8 @@
+[
+{% for user in minecraft_users_ops %}
+  {
+    "uuid": "{{ user.uuid }}",
+    "name": "{{ user.name }}"
+  }
+{% endfor %}
+]
