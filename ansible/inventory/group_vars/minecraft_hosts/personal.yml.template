@@ -11,3 +11,12 @@ personal_minecraft_use_git: 'true'
 personal_minecraft_use_archive: 'false'
 
 personal_minecraft_git_repo: []
+
+personal_minecraft_users_whitelist: []
+#   - name:
+#     uuid:
+personal_minecraft_users_ops: []
+#   - name:
+#     uuid:
+#     level:
+#     bypassplayerlimit: 
