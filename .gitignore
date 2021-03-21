@@ -6,7 +6,7 @@ terraform.tfvars
 .env
 *.pem
 *.plan
-ansible/inventory/**/dyndns.yml
+ansible/inventory/**/personal.yml
 ansible/playbooks/files/minecraft.zip
 ansible/roles/*
 !ansible/roles/requirements.yml
